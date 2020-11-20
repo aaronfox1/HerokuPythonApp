@@ -12,9 +12,9 @@ jobs:
       - run: pip install 
       - run: sudo pip install --upgrade pip
       - run: echo "We have got this far"
-        #command: |
-          #sudo curl https://cli-assets.heroku.com/install.sh | sh 
-          #HEROKU_API_KEY=${HEROKU_API_KEY} heroku container: login
-          #echo "We got this far"
+        command: |
+          sudo curl https://cli-assets.heroku.com/install.sh | sh 
+          HEROKU_API_KEY=${HEROKU_API_KEY} heroku container: login
+          echo "We got this far"
 
 
