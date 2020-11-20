@@ -1,21 +1,20 @@
 version: 2.1
 
-orbs:
-  python: circleci/python@0.2.1
-
-jobs:
-  build-and-test:
-    executor: python/default
     steps:
       - checkout
-      - python/load-cache
-      - python/install-deps
-      - python/save-cache
-      - run:
-          command: ./manage.py test
-          name: Test
+      - run: pip install 
+      - run: sudo pip install --upgrade pip
+      - run: 
+          command: |
+            set -x
 
-workflows:
-  main:
-    jobs:
-      - build-and-test
+            sudo curl https://cli-assets.heroku.com/install.sh | sh 
+            HEROKU_API_KEY=${HEROKU_API_KEY} heroku container: login
+            HEROKU_API_KEY=${HEROKU_API_KEY} heroku container: push -a demo-app-circleci web
+            HEROKU_API_KEY=${HEROKU_API_KEY} heroku container: -a push -a demo-app-circleci web
+      
+
+
+
+
+
