@@ -5,7 +5,7 @@ jobs:
     docker:
       - image: circleci/python:3.6.4
         auth:
-          username: aaronfox1
+          username: fox.aaron38@gmail.com
           password: $DOCKERHUB_PASSWORD
     steps:
       - checkout
