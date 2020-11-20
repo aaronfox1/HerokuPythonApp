@@ -7,15 +7,15 @@ version: 2.1
           username: aaronfox1
           password: $DOCKERHUB_PASSWORD
     
-    steps:
-      - checkout
-      - run: pip install 
-      - run: sudo pip install --upgrade pip
-      - run: 
-          command: |
-            set -x
-            sudo curl https://cli-assets.heroku.com/install.sh | sh 
-            HEROKU_API_KEY=${HEROKU_API_KEY} heroku container: login
+  steps:
+    - checkout
+    - run: pip install 
+    - run: sudo pip install --upgrade pip
+    - run: 
+        command: |
+          set -x
+          sudo curl https://cli-assets.heroku.com/install.sh | sh 
+          HEROKU_API_KEY=${HEROKU_API_KEY} heroku container: login
     
       
 
