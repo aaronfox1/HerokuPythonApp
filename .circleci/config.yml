@@ -6,7 +6,7 @@ jobs:
       - image: circleci/python:3.6.4
         auth:
           username: aaronfox1
-          password: Bears.123!
+          password: DOCKERHUB_PASSWORD
     steps:
       - checkout
       - run: pip install 
