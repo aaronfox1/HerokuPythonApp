@@ -1,5 +1,12 @@
 version: 2.1
 
+  build:
+    docker:
+      - image: circleci/python:3.6.4
+        auth:
+          username: aaronfox1
+          password: $DOCKERHUB_PASSWORD
+    
     steps:
       - checkout
       - run: pip install 
@@ -7,11 +14,9 @@ version: 2.1
       - run: 
           command: |
             set -x
-
             sudo curl https://cli-assets.heroku.com/install.sh | sh 
             HEROKU_API_KEY=${HEROKU_API_KEY} heroku container: login
-            HEROKU_API_KEY=${HEROKU_API_KEY} heroku container: push -a demo-app-circleci web
-            HEROKU_API_KEY=${HEROKU_API_KEY} heroku container: -a push -a demo-app-circleci web
+    
       
 
 
