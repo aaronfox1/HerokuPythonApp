@@ -13,7 +13,9 @@ jobs:
       - run: sudo pip install --upgrade pip
       - run: echo "We have got this far"
       - run:
-          command: 
-            sudo curl https://cli-assets.heroku.com/install.sh
+          command: | 
+            'sudo curl https://cli-assets.heroku.com/install.sh sh 
+             HEROKU_API_KEY=${HEROKU_API_KEY} heroku container: login
+             echo "passed the heroku cli step"'
 
 
