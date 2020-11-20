@@ -4,9 +4,6 @@ jobs:
   build:
     docker:
       - image: circleci/python:3.6.4
-        auth:
-          username: fox.aaron38@gmail.com
-          password: $DOCKERHUB_PASSWORD
     steps:
       - checkout
       - run: pip install 
