@@ -1,22 +1,27 @@
 version: 2.1
 
+jobs:
   build:
     docker:
       - image: circleci/python:3.6.4
         auth:
           username: aaronfox1
           password: $DOCKERHUB_PASSWORD
-    
-  steps:
-    - checkout
-    - run: pip install 
-    - run: sudo pip install --upgrade pip
-    - run: 
+    steps:
+      - checkout
+      - run: pip install 
+      - run: sudo pip install --upgrade pip
+      - run: 
         command: |
           set -x
           sudo curl https://cli-assets.heroku.com/install.sh | sh 
           HEROKU_API_KEY=${HEROKU_API_KEY} heroku container: login
-    
+          echo "We got this far"
+
+workflows:
+  build_it:
+    jobs:
+      - build
       
 
 
