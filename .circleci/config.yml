@@ -14,7 +14,6 @@ jobs:
       - run: echo "We have got this far"
       - run:
           command: 
-            sudo curl https://cli-assets.heroku.com/install.sh | 
-            echo "passed the heroku cli step"
+            sudo curl https://cli-assets.heroku.com/install.sh
 
 
