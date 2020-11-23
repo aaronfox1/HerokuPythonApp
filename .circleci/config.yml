@@ -1,5 +1,8 @@
 version: 2.1
 
+orbs:
+  python: circleci/python@1.2.1
+
 jobs:
   build:
     docker:
@@ -10,8 +13,7 @@ jobs:
     resource_class: small
     steps:
       - checkout
-      - run: pip install 
-      - run: sudo pip install --upgrade pip
+      - run: pip -version 
       - run: echo "We have got this far"
       - run:
           command: | 
