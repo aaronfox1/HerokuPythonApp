@@ -1,25 +1,84 @@
 version: 2.1
 
-orbs:
-  python: circleci/python@1.2.1
-
+executors:
+  python-node:
+      docker:
+        - image: circleci/python:3.6.4
+      resource_class: small
+      
 jobs:
+
   build:
-    docker:
-      - image: circleci/python:3.6.4
-        auth:
-          username: $DOCKERHUB_USERNAME
-          password: $DOCKERHUB_PASSWORD
-    resource_class: small
+    executor: python-node
     steps:
       - checkout
-      - run: pip -version 
-      - run: echo "We have got this far"
       - run:
-          command: | 
-            bash -c '
-            sudo curl https://cli-assets.heroku.com/install.sh  
-            HEROKU_API_KEY=${HEROKU_API_KEY} heroku container: login
-            echo "passed the heroku cli step"'
+          command: |  
+            sudo pip install pipenv
+            pipenv install
 
+
+      - run:
+          name: Download Selenium
+          command: |
+            curl -O http://selenium-release.storage.googleapis.com/3.5/selenium-server-standalone-3.5.3.jar
+            mkdir test-reports && touch test-reports/selenium.log
+
+      - run:
+          name: Download Google Chrome
+          command: |
+            wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+      
+      - run:
+          name: Download ChromeDriver
+          command: |
+            wget https://chromedriver.storage.googleapis.com/2.41/chromedriver_linux64.zip
+            unzip chromedriver_linux64.zip
+
+      - restore_cache:
+          keys:
+            - pip-packages-v1-{{ .Branch }}-{{ checksum "Pipfile.lock" }}
+            - pip-packages-v1-{{ .Branch }}-
+            - pip-packages-v1-
+
+      - save_cache:
+          paths:
+              - ~/.local/share/virtualenvs/venv 
+          key: pip-packages-v1-{{ .Branch }}-{{ checksum "Pipfile.lock" }}
+
+      - persist_to_workspace:
+          root: .
+          paths:
+            - selenium-server-standalone-3.5.3.jar
+            - test-reports
+            - google-chrome-stable_current_amd64.deb
+            - chromedriver
+            
+
+  test:
+    executor: python-node
+    steps:
+      - checkout
+      - attach_workspace:
+          at: .
+
+      - run: 
+          name: Install Google Chrome
+          command: |
+             sudo apt-get update
+             sudo apt install ./google-chrome-stable_current_amd64.deb
+       
+      - run:
+          name: Start Selenium
+          command: java -jar selenium-server-standalone-3.5.3.jar 
+          background: true
+    
+
+workflows:
+  test-workflow:
+    jobs:
+      - build
+      - test:
+          requires:
+            - build
 
