@@ -67,7 +67,7 @@ jobs:
           name: Install Google Chrome
           command: |
              sudo apt-get update
-             sudo apt-get install wget google-chrome-stable_current_amd64.deb
+             sudo apt-get install ./google-chrome-stable_current_amd64.deb
        
       - run:
           name: Start Selenium
