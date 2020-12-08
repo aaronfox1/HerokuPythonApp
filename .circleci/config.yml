@@ -81,7 +81,7 @@ workflows:
   test-workflow:
     jobs:
       - build
-      #- test:
-      ##    requires:
-       #     - build
+      - test:
+         requires:
+            - build
 
