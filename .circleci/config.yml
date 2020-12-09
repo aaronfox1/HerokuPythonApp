@@ -32,8 +32,9 @@ jobs:
             - pip-packages-v1-
 
       - run:
-          name: Install Python Dependancies
+          name: Install Pip andPython Dependancies
           command: |  
+            sudo apt install python3-pip
             sudo pip install pipenv
             pipenv install
 
